@@ -1,0 +1,128 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int id[100];                 // ID array
+    char position[100][30];    // Position (character array)
+    char doj[100][30];        // Date of joining (character array)
+    float salary[100];       // Salary array
+    int count = 0;           // Employee count
+    int choice;
+
+    do {
+        cout << "\n------ Employee Management System ------\n";
+        cout << "\n----------------------------------------\n";
+        cout << "1. Add Employee\n";
+        cout << "2. Delete Employee\n";
+        cout << "3. Update Employee\n";
+        cout << "4. Display All Employees\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cout << "\n----------------------------------------\n";
+
+        if (choice == 1) {
+            // Add Employee
+            if (count < 100) {
+                cout << "Enter ID: ";
+                cin >> id[count];
+
+                cout << "Enter Position: ";
+                cin >> position[count]; 
+
+                cout << "Enter Date of Joining: ";
+                cin >> doj[count];      
+                
+                cout << "Enter Salary: ";
+                cin >> salary[count];
+
+                count++;
+                cout << "Employee added.\n";
+            } else {
+                cout << "Employee limit reached.\n";
+            }
+       
+        } 
+        else if (choice == 2) {
+            // Delete Employee
+            int del;
+            cout << "Enter ID to delete: ";
+            cin >> del;
+            bool found = false;
+
+            for (int i = 0; i < count; i++) {
+                if (id[i] == del) {
+                    for (int j = i; j < count - 1; j++) {
+                        id[j] = id[j + 1];
+
+
+                        for(int k = 0; k < 30; k++) {
+                            position[j][k] = position[j + 1][k];
+                        }
+                        for(int k = 0; k < 30; k++) {
+                            doj[j][k] = doj[j + 1][k];
+                        }
+
+                        salary[j] = salary[j + 1];
+                    }
+                    count--;
+                    found = true;
+                    cout << "Employee deleted.\n";
+                    break;
+                }
+            }
+            if (!found) {
+                cout << "ID not found.\n";
+            }
+        
+        } else if (choice == 3) {
+            // Update Employee
+            int uid;
+            cout << "Enter ID to update: ";
+            cin >> uid;
+            bool updated = false;
+
+            for (int i = 0; i < count; i++) {
+                if (id[i] == uid) {
+                    cout << "Enter new Position: ";
+                    cin >> position[i];
+
+                    cout << "Enter new Date of Joining: ";
+                    cin >> doj[i];
+
+                    cout << "Enter new Salary: ";
+                    cin >> salary[i];
+
+                    updated = true;
+                    cout << "Employee updated.\n";
+                    break;
+                }
+            }
+            if (!updated) {
+                cout << "ID not found.\n";
+            }
+      
+        } else if (choice == 4) {
+            // Display Employees
+            if (count == 0) {
+                cout << "No employee to show.\n";
+            } else {
+                cout << "\nEmployee List:\n";
+                for (int i = 0; i < count; i++) {
+                    cout << "ID: " << id[i]
+                         << ", Position: " << position[i]
+                         << ", DOJ: " << doj[i]
+                         << ", Salary: ₹" << salary[i] << endl;
+                }
+            }
+
+        }
+
+        else if (choice == 5) {
+            cout << "Exit...\n";
+        } 
+     
+    } while (choice != 5);
+
+    return 0;
+}
